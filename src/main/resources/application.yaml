@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: ros-interface-streaming
+  devtools:
+    restart:
+      enabled: true
+
+server:
+  port: 8080
+
+routeros:
+  host: 192.168.88.1
+  port: 8728
+  username: admin
+  password: admin
+  interface: ether1
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
+  endpoint:
+    prometheus:
+      enabled: true
+  metrics:
+    export:
+      prometheus:
+        enabled: true
