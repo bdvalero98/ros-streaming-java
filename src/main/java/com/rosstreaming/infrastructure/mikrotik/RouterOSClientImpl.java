@@ -25,7 +25,7 @@ public class RouterOSClientImpl implements RouterOSClient {
             var result = connection.execute(command);
 
             if (!result.isEmpty()) {
-                var data = result.get(0);
+                var data = result.getFirst();
                 long rx = Long.parseLong(data.get("rx-bits-per-second"));
                 long tx = Long.parseLong(data.get("tx-bits-per-second"));
 
