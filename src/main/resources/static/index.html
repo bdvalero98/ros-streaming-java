@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Interface Traffic Monitor</title>
+    <style>
+        body {
+        font-family: sans-serif;
+        background-color: #f9f9f9;
+        padding: 2rem;
+        text-align: center;
+        }
+        .traffic-box {
+        display: inline-block;
+        padding: 1.5rem;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 12px;
+        box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+        margin-top: 2rem;
+        }
+        h1 {
+        color: #333;
+        }
+        .value {
+        front-size: 2rem;
+        color: #2c7be5;
+        }
+    </style>
+</head>
+<body>
+<h1>Interface Traffic Monitor</h1>
+
+<div class="traffic-box">
+    <p><strong>Rx:</strong> <span id="rx" class="value">--</span> bps</p>
+    <p><strong>Tx:</strong> <span id="tx" class="value">--</span> bps</p>
+</div>
+
+<script>
+    const rxEl = document.getElementById("rx");
+    const txEl = document.getElementById("tx");
+
+    const socket = new WebSocket("ws://" + location.host + "/ws/traffic);
+
+    socket.onmessage = function (event) {
+    const data = JSON.parse(event.data);
+    rxEl.textContent = data.rxBitsPerSecond ?? "--";
+    txEl.textContent = data.txBitsPerSecond ?? "--";
+    };
+
+    socket.onerror = function () {
+    console.error("WebSocket error.");
+    };
+
+    socket.onclose = function () {
+    console.warn("WebSocket closed.");
+    }
+</script>
+</body>
+</html>
